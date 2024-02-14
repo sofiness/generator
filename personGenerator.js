@@ -93,12 +93,115 @@ const personGenerator = {
         return this.randomIntNumber(maxYear, minYear);
     },
 
+    randomProfession: function(gender) {
+        const maleProfessions = {
+            "count": 10,
+            "list": {
+                "id_1": "Инженер",
+                "id_2": "Врач",
+                "id_3": "Учитель",
+                "id_4": "Шахтёр",
+                "id_5": "Водитель",
+                "id_6": "Экономист",
+                "id_7": "Блогер",
+                "id_8": "Программист",
+                "id_9": "Грумер",
+                "id_10": "Кассир"
+            }
+        };
+        const femaleProfessions = {
+            "count": 10,
+            "list": {
+                "id_1": "Медсестра",
+                "id_2": "Учительница",
+                "id_3": "Библиотекарь",
+                "id_4": "Воспитательница",
+                "id_5": "Домохозяйка",
+                "id_6": "Мастер маникюра",
+                "id_7": "Официантка",
+                "id_8": "Переводчик",
+                "id_9": "Грумер",
+                "id_10": "Кассир"
+            }
+        };
+        const professions = gender === this.GENDER_MALE ? maleProfessions : femaleProfessions;
+        const randomIndex = Math.floor(Math.random() * professions.count) + 1;
+        return professions.list[`id_${randomIndex}`];
+    },
+
+    randomPatronymic: function(gender) {
+       const malePatronymics = {
+            "count": 10,
+            "list": {
+                "id_1": "Александрович",
+                "id_2": "Иванович",
+                "id_3": "Петрович",
+                "id_4": "Павлович",
+                "id_5": "Алексеевич",
+                "id_6": "Игоревич",
+                "id_7": "Андреевич",
+                "id_8": "Сергеевич",
+                "id_9": "Фёдорович",
+                "id_10": "Николаевич"
+            } 
+        };
+        const femalePatronymics = {
+            "count": 10,
+            "list": {
+                "id_1": "Александровна",
+                "id_2": "Ивановна",
+                "id_3": "Петровна",
+                "id_4": "Павловна",
+                "id_5": "Алексеевна",
+                "id_6": "Игоревна",
+                "id_7": "Андреевна",
+                "id_8": "Сергеевна",
+                "id_9": "Фёдоровна",
+                "id_10": "Николаевна"
+            }
+        };
+        const patronymics = gender === this.GENDER_MALE ? malePatronymics : femalePatronymics;
+        const randomIndex = Math.floor(Math.random() * patronymics.count) + 1;
+        return patronymics.list[`id_${randomIndex}`];
+    },
+
+    randomBirthday: function() {
+        const months = [
+            "января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря"
+        ];
+    
+        const randomIndex = Math.floor(Math.random() * months.length);
+        const randomMonth = months[randomIndex];
+    
+        const daysInMonth = {
+            "января": 31, "февраля": 28, "марта": 31, "апреля": 30,
+            "мая": 31, "июня": 30, "июля": 31, "августа": 31,
+            "сентября": 30, "октября": 31, "ноября": 30, "декабря": 31
+        };
+    
+        const randomDay = Math.floor(Math.random() * daysInMonth[randomMonth]) + 1;
+    
+        return {
+            month: randomMonth,
+            day: randomDay
+        };
+    },
+
     getPerson: function() {
         const person = {};
-        person.gender = this.randomGender(person.gender);
+        person.gender = this.randomGender();
         person.firstName = this.randomFirstName(person.gender);
         person.lastName = this.randomlastName(person.gender);
         person.birthYear = this.birthYearOutput();
+        person.profession = this.randomProfession(person.gender);
+        person.patronymics = this.randomPatronymic (person.gender);
+        
+        const birthday = this.randomBirthday();
+        const day = birthday.day;
+        const month = birthday.month; 
+
+        person.birthday = `${day} ${month}`;
         return person;
     },
 };
