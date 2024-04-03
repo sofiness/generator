@@ -130,39 +130,28 @@ const personGenerator = {
     },
 
     randomPatronymic: function(gender) {
-       const malePatronymics = {
-            "count": 10,
-            "list": {
-                "id_1": "Александрович",
-                "id_2": "Иванович",
-                "id_3": "Петрович",
-                "id_4": "Павлович",
-                "id_5": "Алексеевич",
-                "id_6": "Игоревич",
-                "id_7": "Андреевич",
-                "id_8": "Сергеевич",
-                "id_9": "Фёдорович",
-                "id_10": "Николаевич"
-            } 
-        };
-        const femalePatronymics = {
-            "count": 10,
-            "list": {
-                "id_1": "Александровна",
-                "id_2": "Ивановна",
-                "id_3": "Петровна",
-                "id_4": "Павловна",
-                "id_5": "Алексеевна",
-                "id_6": "Игоревна",
-                "id_7": "Андреевна",
-                "id_8": "Сергеевна",
-                "id_9": "Фёдоровна",
-                "id_10": "Николаевна"
-            }
-        };
-        const patronymics = gender === this.GENDER_MALE ? malePatronymics : femalePatronymics;
-        const randomIndex = Math.floor(Math.random() * patronymics.count) + 1;
-        return patronymics.list[`id_${randomIndex}`];
+        if (gender === this.GENDER_MALE) {
+            const firstNameMaleJson = this.randomValue(this.firstNameMaleJson);
+            if (firstNameMaleJson.endsWith("н")||firstNameMaleJson.endsWith("р")||firstNameMaleJson.endsWith("м")||firstNameMaleJson.endsWith("л")) {
+                patronymic = firstNameMaleJson + "ович";
+                } else if (firstNameMaleJson.endsWith("й") || firstNameMaleJson.endsWith("ь")) {
+                patronymic = firstNameMaleJson.slice(0, -1) + "евич";
+                } else {
+                patronymic = firstNameMaleJson.slice(0,-1) + "ич";
+                };
+                return patronymic;
+        } else {
+            const firstNameMaleJson = this.randomValue(this.firstNameMaleJson);
+            if (firstNameMaleJson.endsWith("н")||firstNameMaleJson.endsWith("р")||firstNameMaleJson.endsWith("м")||firstNameMaleJson.endsWith("л")) {
+                patronymic = firstNameMaleJson + "овна";
+                } else if (firstNameMaleJson.endsWith("й") || firstNameMaleJson.endsWith("ь")) {
+                patronymic = firstNameMaleJson.slice(0, -1) + "евна";
+                } else {
+                patronymic = firstNameMaleJson.slice(0,-1) + "ична";
+                };
+                return patronymic;
+        }
+      
     },
 
     randomBirthday: function() {
